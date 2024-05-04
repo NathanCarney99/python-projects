@@ -1,6 +1,7 @@
 import os
 import shutil
 
+# Define source and target paths
 source_path = "/Users/nathancarney/Downloads"
 target_path = "/Users/nathancarney"
 
@@ -22,27 +23,31 @@ for item in mySet:
         print("Creating Directory for", item)
         os.makedirs(os.path.join(target_path, str(item)))
 
-# Iterate over files in the source directory
-for filename in os.listdir(source_path):
-    source_file_path = os.path.join(source_path, filename)
+# Remove Duplicates in Target Directories
+for dir in mySet:
+    sub_folder = os.listdir(os.path.join(target_path, dir))
     
-    # Check if the path is a file
-    if os.path.isfile(source_file_path):
-        fileName, fileExt = os.path.splitext(filename)
+    for file in sub_folder:
+        fileName, fileExt = os.path.splitext(str(file))
         ext = fileExt[1:].capitalize()
         
-        # Create subdirectory based on file extension
-        target_subdirectory = os.path.join(target_path, ext)
+        # Check if the file name has at least 3 characters
+        if len(fileName) < 3: continue
         
-        # Construct target file path
-        target_file_path = os.path.join(target_subdirectory, filename)
+        # Extracting the last three characters of the file name
+        last_Char = fileName[-1]
+        sec_Last = fileName[-2]
+        third_Last = fileName[-3]
         
-        # Check if target file already exists
-        if not os.path.exists(target_file_path):
-            # Copy file to target directory
-            print("Copying:", source_file_path, "to", target_file_path)
-            shutil.copy(source_file_path, target_file_path)
-        else:
-            print("File", filename, "already exists in", target_subdirectory)
-    else:
-        print("Skipping:", source_file_path, "as it is not a file.")
+        # Form the path to the target file
+        target_file = os.path.join(target_path, file)
+        
+        # Form the path to the target sub-directory based on the file extension
+        target_sub_directory = os.path.join(target_path, ext)
+        
+        # Check for duplicate files (named with a numeric sequence in parentheses)
+        if(last_Char == ')' and third_Last == '('):
+            if(sec_Last.isnumeric()):
+                # Remove duplicate file
+                os.remove(os.path.join(target_sub_directory, file))
+                print("Duplicate File Removed :", file)
