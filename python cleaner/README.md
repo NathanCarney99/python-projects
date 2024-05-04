@@ -22,11 +22,3 @@ There is no installation required for this script.
 2. Run the script using Python: `python file_organizer.py`.
 3. The script will create directories in the target directory based on unique file extensions found in the source directory.
 4. It will then remove duplicate files within each subdirectory of the target directory.
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or create a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
